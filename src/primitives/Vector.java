@@ -1,0 +1,166 @@
+package primitives;
+
+import java.util.Objects;
+
+import static primitives.Point3D.ZERO;
+
+public class Vector {
+    Point3D _head;
+
+
+    public Vector(Point3D head) {
+        if (head.equals(ZERO)) {
+            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
+        }
+        _head = head;
+    }
+
+    /**
+     * constructor of 3 doubles
+     * @param x
+     * @param y
+     * @param z
+     */
+
+    public Vector(double x, double y, double z) {
+
+ //       Coordinate xx = new Coordinate(x);
+//        Coordinate yy = new Coordinate(y);
+//        Coordinate zz = new Coordinate(z);//
+//        _head._x = xx;
+//        _head._x = yy;
+//        _head._x = zz;
+
+         Point3D p=new Point3D(new Coordinate(x),new Coordinate(y),new Coordinate(z));
+        if (p.equals(ZERO)) {
+            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
+        }
+         _head=p;
+
+    }
+
+    /**
+     * constructor of 3 coordinates
+     * @param x
+     * @param y
+     * @param z
+     */
+    public Vector(Coordinate x, Coordinate y, Coordinate z) {
+        Point3D p=new Point3D(x,y,z);
+        if (p.equals(ZERO)) {
+            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
+        }
+        _head=p;
+
+    }
+
+
+    //מכפלה סקלרית בין 2 וקטורים
+    public double dotProduct(Vector v) {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+
+        double v1 = v._head._x.coord;
+        double v2 = v._head._y.coord;
+        double v3 = v._head._z.coord;
+        return (u1 * v1 + u2 * v2 + u3 * v3);
+    }
+
+    public Vector crossProduct(Vector v) {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+
+        double v1 = v._head._x.coord;
+        double v2 = v._head._y.coord;
+        double v3 = v._head._z.coord;
+        return new Vector(new Point3D(
+                u2 * v3 - u3 * v2,
+                u3 * v1 - u1 * v3,
+                u1 * v2 - u2 * v1
+        ));
+    }
+    public Vector add(Vector v)
+    {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+
+        double v1 = v._head._x.coord;
+        double v2 = v._head._y.coord;
+        double v3 = v._head._z.coord;
+        return new Vector(new Point3D(
+                u1+v1,
+                u2+v2,
+                u3+v3
+        ));
+    }
+    public Vector sutract(Vector v)
+    {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+
+        double v1 = v._head._x.coord;
+        double v2 = v._head._y.coord;
+        double v3 = v._head._z.coord;
+        return new Vector(new Point3D(
+                u1-v1,
+                u2-v2,
+                u3-v3
+        ));
+    }
+    public Vector scale(double d)
+    {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+
+
+        return new Vector(new Point3D(
+                u1*d,
+                u2*d,
+                u3*d
+        ));
+    }
+    public double 	lengthSquared ()
+    {
+        double u1 = _head._x.coord;
+        double u2 = _head._y.coord;
+        double u3 = _head._z.coord;
+        return u1*u1+u2*u2+u3*u3;
+
+    }
+    public double 	length ()
+    {
+        return Math.sqrt(lengthSquared());
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return _head.equals(vector._head);
+    }
+
+   public Vector normalize()
+   {
+       this.scale((1/(this.length())));
+       return this;
+   }
+
+    public Vector normalized()
+    {
+        Vector v=new Vector(_head);
+        v.normalize();
+        return v;
+    }
+
+    @Override
+    public String toString() {
+        return ""+_head.toString();
+    }
+}
