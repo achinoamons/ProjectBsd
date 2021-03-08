@@ -30,12 +30,13 @@ public class Plane implements Geometry {
     /**
      * Plane constractor, gets 3 points
      *
-     * @param vertex
-     * @param vertex1
-     * @param vertex2
+     * @param p1
+     * @param p2
+     * @param p3
      */
-    public Plane(Point3D vertex, Point3D vertex1, Point3D vertex2) {
-        _q0 = vertex;
+    public Plane(Point3D p1, Point3D p2, Point3D p3) {
+        _q0 = p1;
+
         _normal = null;
     }
 
