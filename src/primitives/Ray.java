@@ -2,14 +2,25 @@ package primitives;
 
 import java.util.Objects;
 
+/**
+ * @author Achinoam and Yael
+ * /**
+ *  * "Half-straight - all the points on the line that are on one side of the point given on the line called the beginning / beginning / beginning of the fund):
+ */
 public class Ray {
     Point3D _p0;
     Vector _dir;
 
+    /**
+     * constructor
+     *
+     * @param p0  point
+     * @param dir vector
+     */
     public Ray(Point3D p0, Vector dir) {
         this._p0 = p0;
         this._dir = dir;
-        this._dir=this._dir.normalize();
+        this._dir = this._dir.normalize();
     }
 
     @Override
@@ -22,6 +33,6 @@ public class Ray {
 
     @Override
     public String toString() {
-        return ""+_p0.toString()+":"+_dir.toString();
+        return "" + _p0.toString() + ":" + _dir.toString();
     }
 }
