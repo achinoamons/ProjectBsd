@@ -150,19 +150,19 @@ public class Vector {
     /**
      * Vector multiplication by a number - scalar
      *
-     * @param d the scale
+     * @param factor the scale factor
      * @return a new vector
      */
-    public Vector scale(double d) {
+    public Vector scale(double factor) {
         double u1 = _head._x.coord;
         double u2 = _head._y.coord;
         double u3 = _head._z.coord;
 
 
         return new Vector(new Point3D(
-                u1 * d,
-                u2 * d,
-                u3 * d
+                u1 * factor,
+                u2 * factor,
+                u3 * factor
         ));
     }
 
