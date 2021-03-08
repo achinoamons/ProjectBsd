@@ -193,7 +193,7 @@ public class Vector {
         return _head.equals(vector._head);
     }
 
-    /**
+    /** normalizing the current vector
      * @return The vector normalization action that will change the vector itself
      */
     public Vector normalize() {
