@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 import static primitives.Point3D.ZERO;
 
 /**
@@ -16,6 +14,7 @@ public class Vector {
     Point3D _head;
 
     /**
+     * the mainly used constructor
      * Vector constructor receiving a Vector value by Point3D
      *
      * @param head value
@@ -36,19 +35,20 @@ public class Vector {
      */
 
     public Vector(double x, double y, double z) {
-
+        this (new Point3D(x,y,z));
         //       Coordinate xx = new Coordinate(x);
 //        Coordinate yy = new Coordinate(y);
 //        Coordinate zz = new Coordinate(z);//
 //        _head._x = xx;
 //        _head._x = yy;
 //        _head._x = zz;
+//
+//        Point3D p = new Point3D(new Coordinate(x), new Coordinate(y), new Coordinate(z));
+//        if (p.equals(ZERO)) {
+//            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
+//        }
+//        _head = p;
 
-        Point3D p = new Point3D(new Coordinate(x), new Coordinate(y), new Coordinate(z));
-        if (p.equals(ZERO)) {
-            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
-        }
-        _head = p;
 
     }
 
@@ -60,11 +60,13 @@ public class Vector {
      * @param z Coordinate value
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        Point3D p = new Point3D(x, y, z);
-        if (p.equals(ZERO)) {
-            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
-        }
-        _head = p;
+        this(new Point3D(x,y,z));
+//
+//        Point3D p = new Point3D(x, y, z);
+//        if (p.equals(ZERO)) {
+//            throw new IllegalArgumentException("Vector head cannot be (0,0,0)");
+//        }
+//        _head = p;
 
     }
 
