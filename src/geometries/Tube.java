@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import static primitives.Util.isZero;
+
 /**
  * Tube class represent pipe in 3D Cartesian coordinate system
  *
@@ -28,10 +30,39 @@ public class Tube implements Geometry {
         _radius = radius;
     }
 
+    /**
+     *
+     * @param point for calculate the normal
+     * @return the normal of the tube
+     */
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        //get o:
+        Point3D o=_axisRay.getP0();
+        Vector v=_axisRay.getDir();
+        Vector v1=point.subtract(o);
+        //get the levy t
+        double t=v1.dotProduct(v);
+        if(!isZero(t))
+        {
+            o=o.add(v.scale(t));
+        }
+        //get the normal:
+        Vector n=point.subtract(o);
+        return  n.normalize();
+
+
     }
+//    @Override
+//    public Vector getNormal(Point3D p) {
+//        Vector v1 = new Vector(_axisRay.getDir());
+//        Vector v2 = new Vector(p.subtract(_axisRay.getP0()));
+//        double t = v1.dotProduct(v2);
+//        Point3D nb = new Point3D(_axisRay._POO.add(_axisRay._direction.scale(t)));
+//        Vector n = new Vector(nb.subtract(Point3D.ZERO));
+//        return n;
+//    }
+
 
     public Ray getAxisRay() {
         return _axisRay;

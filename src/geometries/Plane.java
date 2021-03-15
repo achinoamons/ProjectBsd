@@ -33,17 +33,26 @@ public class Plane implements Geometry {
      * @param p1
      * @param p2
      * @param p3
+     * the constructor also calculate the normal of the plane
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         _q0 = p1;
+        Vector U = p2.subtract(p1);
+        Vector V = p3.subtract(p1);
 
-        _normal = null;
+        Vector N = U.crossProduct(V);
+
+        N.normalize();
+
+        _normal = N;
     }
 
     public Vector getNormal() {
-        //to do
+
         return _normal;
     }
+
+
 
     public Point3D getQ0() {
         return _q0;
@@ -59,7 +68,7 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        return _normal;
     }
 
 }

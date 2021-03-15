@@ -13,7 +13,7 @@ public class Sphere implements Geometry {
     /**
      * The center point of the sphere
      */
-    final Point3D _center;
+     Point3D _center;
     /**
      * The radius of the sphere
      */
@@ -30,9 +30,18 @@ public class Sphere implements Geometry {
         this.radius = radius;
     }
 
+    /**
+     *
+     * @param point for calculate the normal vector
+     * @return the normal vector of the sphere
+     */
+
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+
+        Vector n=new Vector(point.subtract(_center).getHead());
+        n.normalize();
+        return n;
     }
 
     public Point3D getCenter() {

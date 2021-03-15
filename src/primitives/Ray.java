@@ -35,4 +35,12 @@ public class Ray {
     public String toString() {
         return "" + _p0.toString() + ":" + _dir.toString();
     }
+
+    public Point3D getP0() {
+        return _p0;
+    }
+
+    public Vector getDir() {
+        return _dir;
+    }
 }
