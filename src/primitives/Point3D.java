@@ -20,7 +20,8 @@ public class Point3D {
      * @param y coordinate for y axis
      * @param z coordinate for z axis
      */
-    public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+    public Point3D(Coordinate x, Coordinate y, Coordinate z)
+    {
         this(x.coord, y.coord, z.coord);
     }
 

@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
@@ -37,17 +39,30 @@ public class Tube implements Geometry {
      */
     @Override
     public Vector getNormal(Point3D point) {
-        //get o:
-        Point3D o=_axisRay.getP0();
+//        //get o:
+//        Point3D o=_axisRay.getP0();
+//        Vector v=_axisRay.getDir();
+//        Vector v1=point.subtract(o);
+//        //get the levy t
+//        double t=v1.dotProduct(v);
+//        if(isZero(t))
+//        {   return v1;
+//
+//        }
+//        o=o.add(v.scale(t));
+//        //get the normal:
+//        Vector n=point.subtract(o);
+//        return  n.normalize();
+        Point3D p0=_axisRay.getP0();
         Vector v=_axisRay.getDir();
-        Vector v1=point.subtract(o);
-        //get the levy t
-        double t=v1.dotProduct(v);
-        if(!isZero(t))
-        {
-            o=o.add(v.scale(t));
+        Vector p0_point=point.subtract(p0);
+        double t=v.dotProduct(p0_point);
+        if(isZero(t)){
+            //הוספתי פה נרמול
+            return p0_point.normalize();
+
         }
-        //get the normal:
+        Point3D o=p0.add(v.scale(t));
         Vector n=point.subtract(o);
         return  n.normalize();
 
@@ -78,5 +93,10 @@ public class Tube implements Geometry {
                 "_axisRay=" + _axisRay +
                 ", _radius=" + _radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
     }
 }

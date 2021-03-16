@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * Sphere class represents sphere in 3D Cartesian coordinate
@@ -39,7 +42,11 @@ public class Sphere implements Geometry {
     @Override
     public Vector getNormal(Point3D point) {
 
-        Vector n=new Vector(point.subtract(_center).getHead());
+        if(point.equals(_center)){
+            throw new IllegalArgumentException("CANNOT CREATE VECTOR 0");
+        }
+        //Vector n=new Vector(point.subtract(_center).getHead());
+        Vector n=point.subtract(_center);
         n.normalize();
         return n;
     }
@@ -58,5 +65,10 @@ public class Sphere implements Geometry {
                 "_center=" + _center +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
     }
 }
