@@ -15,6 +15,6 @@ class SphereTest {
         // ============ Equivalence Partitions Tests ==============
         Sphere sp=new Sphere(new Point3D(0,0,0),5);
         Vector tmp=new Vector(0,1,0);
-        assertTrue(  tmp.equals(sp.getNormal(new Point3D(0, 4, 0))),"getNormal() result is not expected");
+        assertTrue(  tmp.equals(sp.getNormal(new Point3D(0, 5, 0))),"getNormal() result is not expected");
     }
 }
