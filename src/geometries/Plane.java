@@ -6,6 +6,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * Plane class represent A point in space and  a vertical vector
  * system
@@ -35,8 +38,7 @@ public class Plane implements Geometry {
      *
      * @param p1
      * @param p2
-     * @param p3
-     * the constructor also calculate the normal of the plane
+     * @param p3 the constructor also calculate the normal of the plane
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         _q0 = p1;
@@ -54,7 +56,6 @@ public class Plane implements Geometry {
 
         return _normal;
     }
-
 
 
     public Point3D getQ0() {
@@ -75,7 +76,64 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
-        return null;
+    public List<Point3D> findIntersections(Ray ray) {
+//        //data of the ray
+//        Point3D P0 = ray.getP0();
+//        Vector v = ray.getDir();
+//        //if the intersaction point is q0
+//        if (_q0.equals(P0)) {
+//            //Returns an unmodifiable list containing one element-q0
+//            return List.of(_q0);
+//
+//        }
+//        double nv = _normal.dotProduct(v);
+//        //check if 0 in the denominator-n and v orthogonal
+//        //the ray is lying on the plane
+//        if (isZero(nv)) {
+//            return null;
+//        }
+//        //if everything good-calculate p
+//        double t = _normal.dotProduct(_q0.subtract(P0));
+//        t /= nv;
+//        Point3D p = P0.add(v.scale(t));
+//        return List.of(p);
+
+        //data of the ray
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Vector n = _normal;
+        //if the intersaction point is p0-we dont include it
+        if (_q0.equals(P0)) {
+            return null;
+        }
+
+        Vector P0_Q0 = _q0.subtract(P0);
+
+        double numerator = alignZero(n.dotProduct(P0_Q0));
+
+        //
+        if (isZero(numerator)) {
+            return null;
+        }
+
+        //mone
+        double nv = alignZero(n.dotProduct(v));
+
+        // ray is lying in the plane axis
+        if (isZero(nv)) {
+            return null;
+        }
+        //if everything good-calculate p
+        double t = alignZero(numerator / nv);
+
+        if (t <= 0) {
+            return null;
+        }
+        Point3D P = ray.getPoint(t);
+
+        return List.of(P);
     }
+
 }
+

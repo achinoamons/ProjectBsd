@@ -43,4 +43,9 @@ public class Ray {
     public Vector getDir() {
         return _dir;
     }
+
+    public Point3D getPoint(double t) {
+
+       return  _p0.add(_dir.scale(t));
+    }
 }

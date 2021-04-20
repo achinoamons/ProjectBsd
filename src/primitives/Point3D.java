@@ -30,18 +30,18 @@ public class Point3D {
         _y = new Coordinate(y);
         _z = new Coordinate(z);
     }
-//we dont need getters
-//    public Coordinate getX() {
-//        return _x;
-//    }
-//
-//    public Coordinate getY() {
-//        return _y;
-//    }
-//
-//    public Coordinate getZ() {
-//        return _z;
-//    }
+
+    public double getX() {
+        return _x.coord;
+    }
+
+    public double getY() {
+        return _y.coord;
+    }
+
+    public double getZ() {
+        return _z.coord;
+    }
 
     @Override
     public boolean equals(Object o) {
