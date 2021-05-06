@@ -62,8 +62,8 @@ public class Ray {
             return null;
         }
         Point3D result=null;
-       double closestDistane=listOfPoints.get(0).distance(_p0);//זה הכי יפה בעיננו//
-         // double closestDistane = Double.MAX_VALUE;
+       //double closestDistane=listOfPoints.get(0).distance(_p0);//זה הכי יפה בעיננו//
+         double closestDistane = Double.MAX_VALUE;
 
         for (Point3D p :listOfPoints){
             double tmp=p.distance(_p0);
