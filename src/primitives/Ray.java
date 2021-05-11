@@ -1,5 +1,7 @@
 package primitives;
 
+import geometries.Intersectable.*;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -71,6 +73,34 @@ public class Ray {
 
                 closestDistane=tmp;
                 result=p;
+            }
+        }
+        return result;
+    }
+
+
+
+
+    /**
+     *
+     * @param listOfPoints for calculating distance between each point to the ray
+     * @return the point with the closest point to the ray
+     */
+    public GeoPoint findClosestGeoPoint  (List<GeoPoint> listOfPoints){
+        //if the list is empty
+        if(listOfPoints==null){
+            return null;
+        }
+        GeoPoint result=null;
+        //double closestDistane=listOfPoints.get(0).distance(_p0);//זה הכי יפה בעיננו//
+        double closestDistane = Double.MAX_VALUE;
+
+        for (GeoPoint geo :listOfPoints){
+            double tmp=geo.point.distance(_p0);
+            if(tmp<=closestDistane){
+
+                closestDistane=tmp;
+                result=geo;
             }
         }
         return result;

@@ -76,4 +76,23 @@ public class Geometries implements Intersectable {
         }
         return result;
     }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> intersections = null;
+        for (Intersectable geometry : _intersectables) {
+            var geoIntersections = geometry.findGeoIntersections(ray);
+            if (geoIntersections != null) {
+                if (intersections == null) {
+                    intersections = new LinkedList<>();
+
+                }
+                intersections.addAll(geoIntersections);
+            }
+            //if there are elements in geoIntersections – add them to intersections
+
+
+        }
+        return intersections;
+    }
 }

@@ -15,7 +15,7 @@ import static primitives.Util.isZero;
  *
  * @author Achinoam and Yael
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /**
      * Point and vector
      */
@@ -76,28 +76,7 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-//        //data of the ray
-//        Point3D P0 = ray.getP0();
-//        Vector v = ray.getDir();
-//        //if the intersaction point is q0
-//        if (_q0.equals(P0)) {
-//            //Returns an unmodifiable list containing one element-q0
-//            return List.of(_q0);
-//
-//        }
-//        double nv = _normal.dotProduct(v);
-//        //check if 0 in the denominator-n and v orthogonal
-//        //the ray is lying on the plane
-//        if (isZero(nv)) {
-//            return null;
-//        }
-//        //if everything good-calculate p
-//        double t = _normal.dotProduct(_q0.subtract(P0));
-//        t /= nv;
-//        Point3D p = P0.add(v.scale(t));
-//        return List.of(p);
-
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         //data of the ray
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
@@ -132,8 +111,71 @@ public class Plane implements Geometry {
         }
         Point3D P = ray.getPoint(t);
 
-        return List.of(P);
+        return List.of(new GeoPoint(this,P));
     }
+
+
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+////        //data of the ray
+////        Point3D P0 = ray.getP0();
+////        Vector v = ray.getDir();
+////        //if the intersaction point is q0
+////        if (_q0.equals(P0)) {
+////            //Returns an unmodifiable list containing one element-q0
+////            return List.of(_q0);
+////
+////        }
+////        double nv = _normal.dotProduct(v);
+////        //check if 0 in the denominator-n and v orthogonal
+////        //the ray is lying on the plane
+////        if (isZero(nv)) {
+////            return null;
+////        }
+////        //if everything good-calculate p
+////        double t = _normal.dotProduct(_q0.subtract(P0));
+////        t /= nv;
+////        Point3D p = P0.add(v.scale(t));
+////        return List.of(p);
+//
+//        //data of the ray
+//        Point3D P0 = ray.getP0();
+//        Vector v = ray.getDir();
+//
+//        Vector n = _normal;
+//        //if the intersaction point is p0-we dont include it
+//        if (_q0.equals(P0)) {
+//            return null;
+//        }
+//
+//        Vector P0_Q0 = _q0.subtract(P0);
+//
+//        double numerator = alignZero(n.dotProduct(P0_Q0));
+//
+//        //
+//        if (isZero(numerator)) {
+//            return null;
+//        }
+//
+//        //mone
+//        double nv = alignZero(n.dotProduct(v));
+//
+//        // ray is lying in the plane axis
+//        if (isZero(nv)) {
+//            return null;
+//        }
+//        //if everything good-calculate p
+//        double t = alignZero(numerator / nv);
+//
+//        if (t <= 0) {
+//            return null;
+//        }
+//        Point3D P = ray.getPoint(t);
+//
+//        return List.of(P);
+//    }
+
+
 
 }
 

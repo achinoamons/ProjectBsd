@@ -15,7 +15,7 @@ import static primitives.Util.isZero;
  *
  * @author Achinoam and Yael
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
     /**
      * The center point of the sphere
      */
@@ -70,15 +70,16 @@ public class Sphere implements Geometry {
     }
 
     //calculating the point/s of intersection
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
 
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         //calculating varieables for the final formula
         Point3D P0 = ray.getP0();
         Vector V = ray.getDir();
         Point3D O = _center;
         if(P0.equals(_center)){
-            return  List.of(_center.add(V.scale(radius)));
+            return  List.of(new GeoPoint(this,_center.add(V.scale(radius))));
         }
         Vector U = O.subtract(P0);
         double tm = V.dotProduct(U);
@@ -90,7 +91,7 @@ public class Sphere implements Geometry {
         double th =alignZero(Math.sqrt(alignZero(radius*radius-d*d)));
         double t1=alignZero(tm-th);
         double t2=alignZero(tm+th);
-       // if P is on the surface---
+        // if P is on the surface---
         if(isZero(th)){
             return null;
         }
@@ -100,23 +101,71 @@ public class Sphere implements Geometry {
         {
 //            //the first point and the second point
 
-            return List.of(ray.getPoint(t1),ray.getPoint(t2));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint (this,ray.getPoint(t2)));
         }
         //in case of 1 intersaction points
         if(t1>0)
         {
 
-            return List.of(ray.getPoint(t1));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)));
         }
         //in case of 1 intersaction points
         if(t2>0)
         {
 
-            return List.of(ray.getPoint(t2));
+            return List.of(new GeoPoint(this,ray.getPoint(t2)));
         }
-      return null;
+        return null;
 
     }
+
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//
+//        //calculating varieables for the final formula
+//        Point3D P0 = ray.getP0();
+//        Vector V = ray.getDir();
+//        Point3D O = _center;
+//        if(P0.equals(_center)){
+//            return  List.of(_center.add(V.scale(radius)));
+//        }
+//        Vector U = O.subtract(P0);
+//        double tm = V.dotProduct(U);
+//        double d =alignZero(Math.sqrt(alignZero(U.lengthSquared() - tm * tm)));
+//        //there is no intersaction
+//        //
+//        if(d>=radius){
+//            return null;}
+//        double th =alignZero(Math.sqrt(alignZero(radius*radius-d*d)));
+//        double t1=alignZero(tm-th);
+//        double t2=alignZero(tm+th);
+//        // if P is on the surface---
+//        if(isZero(th)){
+//            return null;
+//        }
+//
+//        //in case of 2 intersaction points
+//        if(t1>0&&t2>0)
+//        {
+////            //the first point and the second point
+//
+//            return List.of(ray.getPoint(t1),ray.getPoint(t2));
+//        }
+//        //in case of 1 intersaction points
+//        if(t1>0)
+//        {
+//
+//            return List.of(ray.getPoint(t1));
+//        }
+//        //in case of 1 intersaction points
+//        if(t2>0)
+//        {
+//
+//            return List.of(ray.getPoint(t2));
+//        }
+//        return null;
+//
+//    }
 
 }
 
