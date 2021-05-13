@@ -72,23 +72,23 @@ public class RayTracerBasic extends RayTracerBase {
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color
-                        .add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                        .add(calcDiffusive(kd, nl, lightIntensity), calcSpecular(nl,ks, l, n, v, nShininess, lightIntensity));
             }
         }
         return color;
     }
 
-    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
+    private Color calcSpecular(double nl,double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         //according to phong model formula
         //Calculating reflectance vector:
-        Vector r=l.sutract(n.scale(l.dotProduct(n)*2));
+        Vector r=l.sutract(n.scale(nl*2));
         double minusvr=v.dotProduct(r)*-1;
         return lightIntensity.scale(ks*Math.pow(Math.max(0,minusvr),nShininess));
     }
 
-    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
+    private Color calcDiffusive(double kd, double nl, Color lightIntensity) {
         //according to phong model formula
-        double factor =kd*Math.abs(l.dotProduct(n));
+        double factor =kd*Math.abs(nl);
         return lightIntensity.scale(factor);
     }
 }
