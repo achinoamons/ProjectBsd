@@ -55,6 +55,7 @@ public class PointLight extends Light implements LightSource {
      * @param point is the first point
      * @return the distance between 2 points-helping func
      */
+    @Override
     public double getDistance(Point3D point)
     {
         return _position.distance(point);

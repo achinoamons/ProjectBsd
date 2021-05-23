@@ -73,47 +73,45 @@ public class Sphere extends Geometry {
 
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         //calculating varieables for the final formula
         Point3D P0 = ray.getP0();
         Vector V = ray.getDir();
         Point3D O = _center;
-        if(P0.equals(_center)){
-            return  List.of(new GeoPoint(this,_center.add(V.scale(radius))));
+        if (P0.equals(_center)) {
+            return List.of(new GeoPoint(this, _center.add(V.scale(radius))));
         }
         Vector U = O.subtract(P0);
         double tm = V.dotProduct(U);
-        double d =alignZero(Math.sqrt(alignZero(U.lengthSquared() - tm * tm)));
+        double d = alignZero(Math.sqrt(alignZero(U.lengthSquared() - tm * tm)));
         //there is no intersaction
         //
-        if(d>=radius){
-            return null;}
-        double th =alignZero(Math.sqrt(alignZero(radius*radius-d*d)));
-        double t1=alignZero(tm-th);
-        double t2=alignZero(tm+th);
+        if (d >= radius) {
+            return null;
+        }
+        double th = alignZero(Math.sqrt(alignZero(radius * radius - d * d)));
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
         // if P is on the surface---
-        if(isZero(th)){
+        if (isZero(th)) {
             return null;
         }
 
         //in case of 2 intersaction points
-        if(t1>0&&t2>0)
-        {
+        if ((t1 > 0 && t2 > 0) && (alignZero(t1 - maxDistance) <= 0) && (alignZero(t2 - maxDistance) <= 0)) {
 //            //the first point and the second point
 
-            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint (this,ray.getPoint(t2)));
+            return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
         }
         //in case of 1 intersaction points
-        if(t1>0)
-        {
+        if (t1 > 0 && (alignZero(t1 - maxDistance) <= 0)) {
 
-            return List.of(new GeoPoint(this,ray.getPoint(t1)));
+            return List.of(new GeoPoint(this, ray.getPoint(t1)));
         }
         //in case of 1 intersaction points
-        if(t2>0)
-        {
+        if (t2 > 0 && (alignZero(t2 - maxDistance) <= 0)) {
 
-            return List.of(new GeoPoint(this,ray.getPoint(t2)));
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }
         return null;
 

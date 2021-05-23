@@ -10,6 +10,8 @@ import java.util.List;
 import static primitives.Util.alignZero;
 
 public class RayTracerBasic extends RayTracerBase {
+
+    private static final double DELTA = 0.1;
     //A CONSTRUCTOR that send to the father
     public RayTracerBasic(Scene scene) {
         super(scene);
@@ -70,12 +72,31 @@ public class RayTracerBasic extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
+                if (unshaded(lightSource,intersection)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color
                         .add(calcDiffusive(kd, nl, lightIntensity), calcSpecular(nl,ks, l, n, v, nShininess, lightIntensity));
             }
+            }
         }
         return color;
+    }
+
+    /**
+     *
+     * @param lightSource is the light
+     * @param geoPoint is a point and its geometry
+     * @return if the light is covered by another shape(=if there is shadow or not)
+     */
+    private boolean unshaded(LightSource lightSource, GeoPoint geoPoint) {
+        Point3D point=geoPoint.point;
+        Vector n=geoPoint.geometry.getNormal(point);
+        Ray lightRay=new Ray(point,lightSource,n,DELTA);
+        List<GeoPoint> intersections = _scene.geometries
+                .findGeoIntersections(lightRay, lightSource.getDistance(point));
+        return intersections ==null;
+
+
     }
 
     private Color calcSpecular(double nl,double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {

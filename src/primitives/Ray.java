@@ -1,5 +1,6 @@
 package primitives;
 
+import elements.LightSource;
 import geometries.Intersectable.*;
 
 import java.util.List;
@@ -24,6 +25,22 @@ public class Ray {
         this._p0 = p0;
         this._dir = dir;
         this._dir = this._dir.normalize();
+    }
+
+    /**
+     * constructor that creata a new ray
+     * @param point for _p0
+     * @param lightsource for opposite direction
+     * @param n normal
+     * @param delta for mooving a little bit the start point of the ray
+     */
+    public Ray(Point3D point, LightSource lightsource, Vector n, double delta) {
+       //creating vector in the oppsite direction of the lightsource vector l(GetL)
+        Vector l=lightsource.getL(point).scale(-1);
+        //mooving a little bit the start point of the ray
+        Vector move = n.scale(n.dotProduct(l) > 0 ? delta : - delta);
+        _p0=point.add(move);
+        _dir=l;
     }
 
     @Override

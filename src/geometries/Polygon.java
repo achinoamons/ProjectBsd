@@ -92,7 +92,7 @@ public class Polygon extends Geometry {
 //    }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray,double max) {
         return null;
     }
 }
