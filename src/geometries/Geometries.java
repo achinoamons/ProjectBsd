@@ -58,24 +58,24 @@ public class Geometries implements Intersectable {
      * //if there is no intersaction-return null
      * //else-Activates the function for each shape according to its  implementation and acts accordingly
      */
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-
-        List<Point3D> result = null;
-        for (Intersectable item : this._intersectables) {
-            // Activates the function for each shape according to its  implementation
-            List<Point3D> itemPoints = item.findIntersections(ray);
-            //if there is intersaction
-            if (itemPoints != null) {
-                if (result == null) {
-                    result = new LinkedList<>();
-
-                }
-                result.addAll(itemPoints);
-            }
-        }
-        return result;
-    }
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//
+//        List<Point3D> result = null;
+//        for (Intersectable item : this._intersectables) {
+//            // Activates the function for each shape according to its  implementation
+//            List<Point3D> itemPoints = item.findIntersections(ray);
+//            //if there is intersaction
+//            if (itemPoints != null) {
+//                if (result == null) {
+//                    result = new LinkedList<>();
+//
+//                }
+//                result.addAll(itemPoints);
+//            }
+//        }
+//        return result;
+//    }
 
 //    @Override
 //    public List<GeoPoint> findGeoIntersections(Ray ray) {
