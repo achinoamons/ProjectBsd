@@ -18,13 +18,16 @@ public interface Intersectable {
      * inner static class that help us know for which shape a point is belong to
      */
     public static class GeoPoint {
+        /**
+         *
+         */
         public Geometry geometry;
         public Point3D point;
 
         /**
          * constructor that initiate the field
          * @param geometry is the shape
-         * @param point is the point (that it belongs to)
+         * @param point is the intersection  point (that it belongs to)
          */
         public GeoPoint(Geometry geometry, Point3D point) {
             this.geometry = geometry;
@@ -52,7 +55,9 @@ public interface Intersectable {
     default List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null
-                : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
+                : geoList.stream()
+                .map(gp -> gp.point)
+                .collect(Collectors.toList());
     }
 
     default List<GeoPoint> findGeoIntersections (Ray ray){

@@ -5,7 +5,6 @@ import elements.*;
 import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 /**
@@ -38,7 +37,7 @@ public class ShadowTests {
         Render render = new Render(). //
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }
@@ -61,7 +60,7 @@ public class ShadowTests {
         Render render = new Render(). //
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitialMovet1", 400, 400)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }
@@ -86,7 +85,7 @@ public class ShadowTests {
         Render render = new Render(). //
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitialMovet2", 400, 400)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }
@@ -108,7 +107,7 @@ public class ShadowTests {
         Render render = new Render(). //
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitialMovel3", 400, 400)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }
@@ -131,7 +130,7 @@ public void sphereTriangleInitialMovel4() {
     Render render = new Render(). //
             setImageWriter(new ImageWriter("shadowSphereTriangleInitialMovel4", 400, 400)) //
             .setCamera(camera) //
-            .setRayTracer(new RayTracerBasic(scene));
+            .setRayTracer(new BasicRayTracer(scene));
     render.renderImage();
     render.writeToImage();
 }
@@ -159,7 +158,7 @@ public void sphereTriangleInitialMovel4() {
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
     }

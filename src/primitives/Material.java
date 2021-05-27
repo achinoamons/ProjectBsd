@@ -5,8 +5,8 @@ public class Material {
     public double kS=0;//specular
     public int nShininess=0;
 
-    public double kT=0.0;//refraction
-    public double kR=0.0;//reflaction
+    public double kT=0.0;//refraction both fields between 0 to 1
+    public double kR=0.0;//reflaction both fields between 0 to 1
     /**
      * setters for this fields
      *

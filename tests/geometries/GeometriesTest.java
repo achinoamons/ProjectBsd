@@ -75,4 +75,41 @@ class GeometriesTest {
         assertEquals( 3, l.size(),"Ray not included in the plane");
 
     }
+
+
+
+
+    @Test
+    void findIntersectionsdouble() {
+        Geometries g = new Geometries();
+
+
+        // Empty list
+        assertNull(  g.findGeoIntersections(new Ray(new Point3D(3, 1, 0.5), new Vector(1, 1, 0)),5),"list Empty");
+
+        g._intersectables.add(new Triangle(new Point3D(-1, 0.5, -6), new Point3D(-1, 0, -6), new Point3D(2, 0, -6)));
+        g._intersectables.add(new Plane(new Point3D(1, 0, -4), new Vector (0, 0, 1)));
+        g._intersectables.add(new Sphere(new Point3D(0, 0, 1), 5));
+
+        // short ray that end before all the shapes  therefore there are no intersaction points with any shape
+        List<Intersectable.GeoPoint>  l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),1);
+        assertNull( l);
+
+        // only the triangle is in the range so there is interaction only with the triangle
+         l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),3);
+        assertEquals( 1, l.size(),"not good");
+
+
+        // only the triangle and the plane and 1 point in the sphere in the range so there is 3 interaction
+        l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),5);
+        assertEquals( 3, l.size(),"not good");
+
+
+        // all shape cut because all shapes in the range
+        l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),15);
+        assertEquals( 4, l.size(),"not good");
+
+
+    }
+
 }

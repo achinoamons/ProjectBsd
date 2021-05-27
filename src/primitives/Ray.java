@@ -12,9 +12,11 @@ import java.util.Objects;
  *  * "Half-straight - all the points on the line that are on one side of the point given on the line called the beginning / beginning / beginning of the fund):
  */
 public class Ray {
-    Point3D _p0;
-    Vector _dir;
     private static final double DELTA = 0.1;
+
+    private final Point3D _p0;
+    private final Vector _dir;
+
     /**
      * constructor
      *
@@ -22,13 +24,14 @@ public class Ray {
      * @param dir vector
      */
     public Ray(Point3D p0, Vector dir) {
-        this._p0 = p0;
-        this._dir = dir;
-        this._dir = this._dir.normalize();
+        _p0 = p0;
+        //this._dir = dir;
+        //this._dir = this._dir.normalize();
+        _dir=dir.normalized();
     }
 
     /**
-     * constructor that creata a new ray
+     * constructor that creata a new ray-Building a ray with moving a point
      * @param point for _p0
      *
      * @param n normal
@@ -37,7 +40,6 @@ public class Ray {
      */
 
         public Ray(Point3D point, Vector v , Vector n) {
-       //creating vector in the oppsite direction of the lightsource vector l(GetL)
 
         //mooving a little bit the start point of the ray
         Vector move = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
