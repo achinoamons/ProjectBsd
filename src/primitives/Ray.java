@@ -3,8 +3,12 @@ package primitives;
 import elements.LightSource;
 import geometries.Intersectable.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.random;
 
 /**
  * @author Achinoam and Yael
@@ -134,5 +138,83 @@ public class Ray {
             }
         }
         return result;
+    }
+
+
+    //////////////////////
+
+
+    /**
+     *
+     *
+     * @param centerOfCircle center
+     * @param radius         radius of circle
+     * @return random point on the circle
+     */
+    //anti
+//    public Point3D randomPointOnRadius(Point3D centerOfCircle, double radius) {
+//        Vector firstNormal = _dir.createVerticalVector();
+//        Vector secondNormal = firstNormal.crossProduct(_dir).normalize();
+//        Point3D randomCirclePoint = centerOfCircle;
+//        double x = 0, y = 0, r = 0;
+//        x = random(-1, 1);
+//        y = Math.sqrt(1 - x * x);
+//        r = random(-radius, radius);
+//        x = alignZero(x * r);
+//        y = alignZero(y * r);
+//        if (x != 0)
+//            randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
+//        if (y != 0)
+//            randomCirclePoint = randomCirclePoint.add(secondNormal.scale(y));
+//        return randomCirclePoint;
+//    }
+    /**
+     * **for antiAliasing**<br>
+     * Gets the num of rays and the area's degrees where all the rays will be
+     *
+     * @param NumOfRays num of additional rays
+     * @param radius    of the area for all the rays
+     * @param distance  of the radius circle from the head of the ray
+     * @return rays are randomly whitout the ray itself
+     */
+    //anti ali
+//    public List<Ray> raySplitter(int NumOfRays, double radius, double distance) {
+//        if(NumOfRays==1){return List.of(this);}
+//        List<Ray> splittedRays = new LinkedList<>();
+//        Point3D centerCirclePoint = null;
+//
+//        try {
+//            centerCirclePoint = this.getPoint(distance);
+//        } catch (Exception e) {
+//            centerCirclePoint = _p0;
+//        }
+//        Point3D randomCirclePoint = null;
+//        for (int i = 0; i < NumOfRays; i++) {
+//            randomCirclePoint = randomPointOnRadius(centerCirclePoint, radius);
+//            Vector v = randomCirclePoint.subtract(_p0);
+//            splittedRays.add(new Ray(_p0, v));
+//        }
+//        return splittedRays;
+//    }
+    /**
+     * **for Depth Of Filed**<br>
+     * Creates a beam of rays
+     *
+     * @param NumOfRays  num of additional rays
+     * @param size       of the area for all the rays--shutter size
+     * @param distance   of the square from the head of the ray
+     * @param focalPoint target point, all the rays will go through this point
+     * @return A list of random rays passing through the given square including the
+     *         ray itself
+     */
+    public List<Ray> raySplitter(int NumOfRays, double size, double distance, Point3D focalPoint) {
+        List<Ray> splittedRays = new LinkedList<>();
+        for (int i = 0; i < NumOfRays; i++) {
+            Point3D point3d = _p0.randomPointOnSquare(_dir, size, size);
+            Vector v = focalPoint.subtract(point3d);
+            splittedRays.add(new Ray(point3d, v));
+        }
+        splittedRays.add(this);
+        return splittedRays;
     }
 }

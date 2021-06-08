@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Util.random;
+
 /**
  * basic point for RayTracing project
  *
@@ -106,5 +108,74 @@ public class Point3D {
                 _y.coord + vector._head._y.coord,
                 _z.coord + vector._head._z.coord
         );
+    }
+
+    ////////////////////
+    /**
+     * find the minimum Coordinate
+     *
+     * @return if Coordinate x is minimum return 'x'<br>
+     *         if Coordinate y is minimum return 'y'<br>
+     *         if Coordinate z is minimum return 'z'<br>
+     *         if all Coordinates are equal return 'x'
+     */
+    public char findMinimumCoordinate() {
+        double x = getX(), y = getY(), z = getZ();
+        double minimum = Math.abs(x);
+        char index = 'x';
+        y = Math.abs(y);
+        if (y < minimum) {
+            minimum = y;
+            index = 'y';
+        }
+        z = Math.abs(z);
+        if (z < minimum) {
+            minimum = z;
+            index = 'z';
+        }
+        return index;
+    }
+
+    /**
+     * Function to the center of the circle,<br>
+     * which receives a circle,<br>
+     * and returns a random point on the circle
+     *
+     * @param dir    The normal exiting the circle,<br>
+     *               together with the radius or height and length representing the
+     *               circle,
+     * @param radius radius of circle
+     * @return Returns a random point on the circle
+     */
+
+
+    /**
+     * Function to the center of the square,<br>
+     * which receives a square,<br>
+     * and returns a random point on the square
+     *
+     * @param dir    The normal exiting the square,<br>
+     *               together with the radius or height and length representing the
+     *               square,
+     * @param width  of the square
+     * @param height of the square
+     * @return Returns a random point on the square
+     */
+    public Point3D randomPointOnSquare(Vector dir, double width, double height) {
+        Vector firstNormal = dir.createOrthogonalVector();
+        Vector secondNormal = firstNormal.crossProduct(dir).normalize();
+        Point3D randomCirclePoint = this;
+        double r;
+        double wHalf = width / 2;
+        r = random(0, wHalf);
+        double x = random(-r, r);
+        double hHalf = height / 2;
+        r = random(0, hHalf);
+        double y = random(-r, r);
+        if (x != 0)
+            randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
+        if (y != 0)
+            randomCirclePoint = randomCirclePoint.add(secondNormal.scale(y));
+        return randomCirclePoint;
     }
 }

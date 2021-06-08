@@ -95,6 +95,8 @@ class GeometriesTest {
         List<Intersectable.GeoPoint>  l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),1);
         assertNull( l);
 
+
+
         // only the triangle is in the range so there is interaction only with the triangle
          l = g.findGeoIntersections(new Ray(new Point3D(-0.7, 0.2, -8), new Vector(0, 0, 1)),3);
         assertEquals( 1, l.size(),"not good");

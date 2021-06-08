@@ -1,10 +1,12 @@
 package renderer;
 
+import elements.Camera;
 import elements.LightSource;
 import primitives.*;
 import scene.Scene;
 import geometries.Intersectable.GeoPoint;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -224,5 +226,9 @@ public class BasicRayTracer extends RayTracerBase {
         GeoPoint closestintersaction = ray.findClosestGeoPoint(intersactions);
         return closestintersaction;
     }
+
+
+
+
 }
 

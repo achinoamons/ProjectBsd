@@ -3,8 +3,8 @@ package renderer;
 import elements.Camera;
 import primitives.Color;
 import primitives.Ray;
-import scene.Scene;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 /**
@@ -13,9 +13,28 @@ import java.util.MissingResourceException;
  */
 public class Render {
     ImageWriter _imageWriter = null;
-    //Scene _scene = null;---לפי ההנחיות החדשות
     Camera _camera = null;
     RayTracerBase _rayTracerBase = null;
+    private boolean isAntialiacing=false;
+    private boolean isDepthOfField=false;
+
+    public boolean isDepthOfField() {
+        return isDepthOfField;
+    }
+
+    public Render setDepthOfField(boolean depthOfField) {
+        isDepthOfField = depthOfField;
+        return this;
+    }
+
+    public boolean isAntialiacing() {
+        return isAntialiacing;
+    }
+
+    public Render setAntialiacing(boolean antialiacing) {
+        isAntialiacing = antialiacing;
+        return this;
+    }
 
     //chaining methods that return the object itself (render)
     public Render setImageWriter(ImageWriter imageWriter) {
@@ -55,15 +74,37 @@ public class Render {
             }
             //if all fields not null-do this:
             //render the image
+            Color pixelcolor = Color.BLACK;
             int nX = _imageWriter.getNx();
             int nY = _imageWriter.getNy();
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     //create the ray
-                    Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
-                    //color the closest point to the ray (if exist) or background...
-                    Color pixelcolor = _rayTracerBase.traceRay(ray);
-                    //go andcolor it in the image
+                    if (!isAntialiacing&&!isDepthOfField) {//if there is no improvement
+                        Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
+                        //color the closest point to the ray (if exist) or background...
+                        pixelcolor = _rayTracerBase.traceRay(ray);
+
+                    }
+                    else if(isDepthOfField) {
+                       List<Ray>  rays = _camera.constructBeamRay(nX, nY, j, i);
+                        //color the closest point to the ray (if exist) or background...
+                        for (var r : rays) {
+                            Color rcolor =_rayTracerBase.traceRay(r);
+                            pixelcolor= pixelcolor.add(rcolor);
+                        }
+                        pixelcolor=pixelcolor.scale(1d/rays.size());
+                    }
+                    else if (isAntialiacing){//anti true
+
+                        List<Ray> rays = _camera.constructRaysThroughPixel(nX,nY,j,i);
+                        for (var r : rays) {
+                            Color rcolor =_rayTracerBase.traceRay(r);
+                           pixelcolor= pixelcolor.add(rcolor);
+                        }
+                        pixelcolor=pixelcolor.scale(1d/rays.size());
+                    }
+                    //go and color it in the image
                     _imageWriter.writePixel(j, i, pixelcolor);
 
 

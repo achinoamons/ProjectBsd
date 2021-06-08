@@ -222,4 +222,27 @@ public class Vector {
     public Point3D getHead() {
         return _head;
     }
+    //////////////
+    /**
+     * This function return a Vertical Vector to "this" vector (this) most be
+     * normalized!!!
+     *
+     * @return normalized normal vector
+     */
+    public Vector createOrthogonalVector() {
+        double x = _head.getX(), y = _head.getY(), z = _head.getZ();
+        switch (_head.findMinimumCoordinate()) {
+            case 'x': {
+                return new Vector(0, -z, y).normalize();
+            }
+            case 'y': {
+                return new Vector(-z, 0, x).normalize();
+            }
+            case 'z': {
+                return new Vector(y, -x, 0).normalize();
+            }
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + _head.findMinimumCoordinate());
+        }
+    }
 }
