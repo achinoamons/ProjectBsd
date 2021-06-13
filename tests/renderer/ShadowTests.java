@@ -15,7 +15,7 @@ import scene.Scene;
 public class ShadowTests {
     private Scene scene = new Scene("Test scene");
     private Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-            .setViewPlaneSize(200, 200).setDistance(1000);
+            .setViewPlaneSize(200, 200).setDistance(1000).setSizeGrid(81);
 
     /**
      * Produce a picture of a sphere and triangle with point light and shade
@@ -37,7 +37,8 @@ public class ShadowTests {
         Render render = new Render(). //
                 setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene));
+                .setRayTracer(new BasicRayTracer(scene))
+               ;
         render.renderImage();
         render.writeToImage();
     }

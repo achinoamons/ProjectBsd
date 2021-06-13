@@ -19,7 +19,8 @@ public class SuperSampling {
         Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setDistance(50) //
                 .setViewPlaneSize(80, 80)
-                .setSizeGrid(100);
+                .setSizeGrid(81)
+                .setAntialiacing(true);
         Scene scene = new Scene("Anti Aliasing test")//
                 .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
                 .setBackground(new Color(75, 127, 90));
@@ -33,8 +34,8 @@ public class SuperSampling {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene))
-                .setAntialiacing(true);//
+                .setRayTracer(new BasicRayTracer(scene));
+                //
 
                //
 

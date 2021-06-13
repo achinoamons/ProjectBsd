@@ -15,7 +15,8 @@ public class DepthOfFieldTest {
         Scene scene = new Scene("Depth Of Field");
 
         Camera camera = (new Camera(new Point3D(150, 100, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)))
-                .setDistance(1400).setViewPlaneSize(700, 700);
+                .setDistance(1400).setViewPlaneSize(700, 700)
+                 .setDepthOfField(true);
 
         scene.setBackground(new Color(25, 25, 112));
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
@@ -45,8 +46,8 @@ public class DepthOfFieldTest {
                 .setCamera(camera
                         .setDistanceToFocalPlane(new Point3D(150, 100, 1000).distance(new Point3D(200, 100, -200)))
                         .setSizeForApertureWindow(100).setNumOfRayFormApertureWindowToFocalPoint(50))
-                .setRayTracer(new BasicRayTracer(scene))
-                .setDepthOfField(true);
+                .setRayTracer(new BasicRayTracer(scene));
+
         //
 
         render.renderImage();
@@ -57,7 +58,7 @@ public class DepthOfFieldTest {
         Render render1 = new Render().setImageWriter(imageWriter1)
                 .setCamera(camera
                         .setDistanceToFocalPlane(new Point3D(150, 100, 1000).distance(new Point3D(200, 100, -200)))
-                        .setSizeForApertureWindow(100).setNumOfRayFormApertureWindowToFocalPoint(50))
+                        .setSizeForApertureWindow(100).setNumOfRayFormApertureWindowToFocalPoint(50).setDepthOfField(false))
                 .setRayTracer(new BasicRayTracer(scene));
 
         //
