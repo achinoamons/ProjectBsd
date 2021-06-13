@@ -329,8 +329,8 @@ public class Render {
                     if (camera.isAntialiacing() && camera.isDepthOfField()) {
                         bothImprovements(nX, nY, j, i);
                     }
-                    //depthOfField
-                    else if (camera.isDepthOfField()) {
+                    //depthOfField only
+                    else if (camera.isDepthOfField()&&!camera.isAntialiacing()) {
                         List<Ray> rays = camera.constructBeamRay(nX, nY, j, i);
                         Color pixelcolor = Color.BLACK;
                         for (var r : rays) {
@@ -340,8 +340,8 @@ public class Render {
                         pixelcolor = pixelcolor.scale(1d / rays.size());
                         imageWriter.writePixel(j, i, pixelcolor);
                     }
-                    //AntiAliacing
-                    else if (camera.isAntialiacing()) {//anti true
+                    //AntiAliacing only
+                    else if (camera.isAntialiacing()&&!camera.isDepthOfField()) {//anti true
                         Color pixelcolor = Color.BLACK;
                         List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i);
                         for (var r : rays) {
@@ -363,6 +363,13 @@ public class Render {
     }
     public void bothImprovements(int nX, int nY, int col, int row){
         Color pixelcolor = Color.BLACK;
+        //antialiacing
+        List<Ray> rays1 = camera.constructRaysThroughPixel(nX, nY, col, row);
+        for (var r : rays1) {
+            Color rcolor = tracer.traceRay(r);
+            pixelcolor = pixelcolor.add(rcolor);
+        }
+        pixelcolor = pixelcolor.scale(1d / rays1.size());
         //depthofField
         List<Ray> rays = camera.constructBeamRay(nX, nY, col, row);
 
@@ -370,14 +377,9 @@ public class Render {
             Color rcolor = tracer.traceRay(r);
             pixelcolor = pixelcolor.add(rcolor);
         }
-        //pixelcolor = pixelcolor.scale(1d / rays.size());
-        //antialiacing
-        List<Ray> rays1 = camera.constructRaysThroughPixel(nX, nY, col, row);
-        for (var r : rays1) {
-            Color rcolor = tracer.traceRay(r);
-            pixelcolor = pixelcolor.add(rcolor);
-        }
-        pixelcolor = pixelcolor.scale(1d / (rays1.size()+rays.size()));
+        pixelcolor = pixelcolor.scale(1d / rays.size());
+
+       // pixelcolor = pixelcolor.scale(1d / (rays1.size()+rays.size()));
         imageWriter.writePixel(col, row, pixelcolor);
 
     }

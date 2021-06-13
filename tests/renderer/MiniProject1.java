@@ -20,9 +20,9 @@ public class MiniProject1 {
         Scene scene = new Scene("Depth Of Field");
 
         Camera camera = (new Camera(new Point3D(150, 100, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)))
-                .setDistance(1400).setViewPlaneSize(700, 700).setSizeGrid(81);
-              // .setDepthOfField(true)
-              //  .setAntialiacing(true);
+                .setDistance(1400).setViewPlaneSize(700, 700).setSizeGrid(81)
+             .setDepthOfField(true);
+               //.setAntialiacing(true);
 
         scene.setBackground(new Color(255, 153, 153));
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));

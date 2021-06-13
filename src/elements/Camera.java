@@ -182,99 +182,80 @@ public class Camera {
         _distance = distance;
         return this;
     }
+//random antialiacing without grid
 
-
-    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
-        double Rx = _width / nX;//the length of pixel in X axis
-        double Ry = _height / nY;//the length of pixel in Y axis
-
-        Point3D Pij = getPij(nX, nY, j, i, _width, _height, _distance);
-
-        //-----SuperSampling-----
-        List<Ray> rays = new LinkedList<>();//the return list, construct Rays Through Pixels
-         rays.add(new Ray(_p0,Pij.subtract(_p0)));
-        Point3D tmp;
-        for(int k=0;k<sizeGrid;k++)
-        {
-           double randx=random(-Rx/2,Rx/2);
-            double randy=random(-Ry/2,Ry/2);
-            tmp=new Point3D(Pij.getX()+randx,Pij.getY()+randy,Pij.getZ());
-           rays.add(new Ray(_p0, tmp.subtract(_p0)));
-
-        }
-
-
-
-
-//       double randx,randy;
-//        for (int row = -delta; row <= delta; row++) {
-//            for (int col = -delta; col <= delta; col++) {
-//                tmp = new Point3D(Pij.getX(),Pij.getY(),Pij.getZ());//מרכז הפיקסל הספציפי
-//                if (!isZero(row)) {//אם אני לא בפיקסל המרכזי
-//                   randx=random(-gapX/2,gapX/2);
-//                    tmp = tmp.add(_vRIGHT.scale(row *randx)) ;//(double) Math.random()*((gapX))-gapX/2))
-//                    //tmp = tmp.add(_vRIGHT.scale(row * gapX));
-//                }
-//                if (!isZero(col)) {
-//                    randy=random(-gapY/2,gapY/2);
-//                    tmp = tmp.add(_vRIGHT.scale(col * randy));//(double) Math.random()*((gapY))-gapY/2));
-//                    //tmp = tmp.add(_vRIGHT.scale(col * gapY));
-//                }
-//                rays.add(new Ray(_p0, tmp.subtract(_p0).normalize()));
-//            }
-//        }
-        return rays;
-    }
-
-    //אם הוא דוקא רוצה גריד יש אותו פה
 //    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
-//        Ray centerRay = constructRayThroughPixel(nX,nY,j,i);
-////        double t = _distance / (_vTO.dotProduct(centerRay.getDir()));
-////        List<Ray> rays = centerRay.raySplitter(sizeGrid,_width/nX,t);
-////        return rays;
-//
-//
-//
 //        double Rx = _width / nX;//the length of pixel in X axis
 //        double Ry = _height / nY;//the length of pixel in Y axis
 //
 //        Point3D Pij = getPij(nX, nY, j, i, _width, _height, _distance);
-//        Point3D tmp;
+//
 //        //-----SuperSampling-----
 //        List<Ray> rays = new LinkedList<>();//the return list, construct Rays Through Pixels
+//         rays.add(new Ray(_p0,Pij.subtract(_p0)));
+//        Point3D tmp;
+//        for(int k=0;k<sizeGrid;k++)
+//        {
+//           double randx=random(-Rx/2,Rx/2);
+//            double randy=random(-Ry/2,Ry/2);
+//            tmp=new Point3D(Pij.getX()+randx,Pij.getY()+randy,Pij.getZ());
+//           rays.add(new Ray(_p0, tmp.subtract(_p0)));
 //
-//
-//        double n = Math.floor(Math.sqrt(sizeGrid));
-//        int delta = (int) (n / 2d);//התזוזות ממרכז הפיקסל
-//        //אורך ורוחב של כל "תת" פיקסל
-//        double gapX = Rx / n;
-//        double gapY = Ry / n;
-//
-///* ***********************************************************************
-//             |(-3,-3)|(-3,-2)|(-3,-1)|(-3, 0)|(-3, 1)|(-3, 2)||(-3, 3)
-//             |(-2,-3)|(-2,-2)|(-2,-1)|(-2, 0)|(-2, 1)|(-2, 2)||(-2, 3)
-//             |(-1,-3)|(-1,-2)|(-1,-1)|(-1, 0)|(-1, 1)|(-1, 2)||(-1, 3)
-//             |( 0,-3)|( 0,-2)|( 0,-1)|( 0, 0)|( 0, 1)|( 0, 2)||( 0, 3)
-//             |( 1,-3)|( 1,-2)|( 1,-1)|( 1, 0)|( 1, 1)|( 1, 2)||( 1, 3)
-//             |( 2,-3)|( 2,-2)|( 2,-1)|( 2, 0)|( 2, 1)|( 2, 2)||( 2, 3)
-//             |( 3,-3)|( 3,-2)|( 3,-1)|( 3, 0)|( 3, 1)|( 3, 2)||( 3, 3)
-//*************************************************************************** */
-//        for (int row = -delta; row <= delta; row++) {
-//            for (int col = -delta; col <= delta; col++) {
-//                tmp = new Point3D(Pij.getX(),Pij.getY(),Pij.getZ());//מרכז הפיקסל הספציפי
-//                if (!isZero(row)) {//אם אני לא בפיקסל המרכזי
-//                    tmp = tmp.add(_vRIGHT.scale(row * (double) Math.random()*((gapX))-(gapX)/2));//(double) Math.random()*((gapX))-gapX/2))
-//                    //tmp = tmp.add(_vRIGHT.scale(row * gapX));
-//                }
-//                if (!isZero(col)) {
-//                    tmp = tmp.add(_vRIGHT.scale(col * (double) Math.random()*((gapY))-(gapY)/2));//(double) Math.random()*((gapY))-gapY/2));
-//                    //tmp = tmp.add(_vRIGHT.scale(col * gapY));
-//                }
-//                rays.add(new Ray(_p0, tmp.subtract(_p0).normalize()));
-//            }
 //        }
+//
+//
 //        return rays;
 //    }
+
+    //random with grid
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
+        Ray centerRay = constructRayThroughPixel(nX,nY,j,i);
+//        double t = _distance / (_vTO.dotProduct(centerRay.getDir()));
+//        List<Ray> rays = centerRay.raySplitter(sizeGrid,_width/nX,t);
+//        return rays;
+
+
+
+        double Rx = _width / nX;//the length of pixel in X axis
+        double Ry = _height / nY;//the length of pixel in Y axis
+
+        Point3D Pij = getPij(nX, nY, j, i, _width, _height, _distance);
+        Point3D tmp;
+        //-----SuperSampling-----
+        List<Ray> rays = new LinkedList<>();//the return list, construct Rays Through Pixels
+
+
+        double n = Math.floor(Math.sqrt(sizeGrid));
+        int delta = (int) (n / 2d);//התזוזות ממרכז הפיקסל
+        //אורך ורוחב של כל "תת" פיקסל
+        double gapX = Rx / n;
+        double gapY = Ry / n;
+
+/* ***********************************************************************
+             |(-3,-3)|(-3,-2)|(-3,-1)|(-3, 0)|(-3, 1)|(-3, 2)||(-3, 3)
+             |(-2,-3)|(-2,-2)|(-2,-1)|(-2, 0)|(-2, 1)|(-2, 2)||(-2, 3)
+             |(-1,-3)|(-1,-2)|(-1,-1)|(-1, 0)|(-1, 1)|(-1, 2)||(-1, 3)
+             |( 0,-3)|( 0,-2)|( 0,-1)|( 0, 0)|( 0, 1)|( 0, 2)||( 0, 3)
+             |( 1,-3)|( 1,-2)|( 1,-1)|( 1, 0)|( 1, 1)|( 1, 2)||( 1, 3)
+             |( 2,-3)|( 2,-2)|( 2,-1)|( 2, 0)|( 2, 1)|( 2, 2)||( 2, 3)
+             |( 3,-3)|( 3,-2)|( 3,-1)|( 3, 0)|( 3, 1)|( 3, 2)||( 3, 3)
+*************************************************************************** */
+        for (int row = -delta; row <= delta; row++) {
+            for (int col = -delta; col <= delta; col++) {
+                tmp = new Point3D(Pij.getX(),Pij.getY(),Pij.getZ());//מרכז הפיקסל הספציפי
+                if (!isZero(row)) {//אם אני לא בפיקסל המרכזי
+                    tmp = tmp.add(_vRIGHT.scale(row * (double) Math.random()*((gapX))-(gapX)/2));//(double) Math.random()*((gapX))-gapX/2))
+                    //tmp = tmp.add(_vRIGHT.scale(row * gapX));
+                }
+                if (!isZero(col)) {
+                    tmp = tmp.add(_vRIGHT.scale(col * (double) Math.random()*((gapY))-(gapY)/2));//(double) Math.random()*((gapY))-gapY/2));
+                    //tmp = tmp.add(_vRIGHT.scale(col * gapY));
+                }
+                rays.add(new Ray(_p0, tmp.subtract(_p0).normalize()));
+            }
+        }
+        return rays;
+    }
 
     private Point3D getPij(int nX, int nY, int j, int i, double width, double height, double distance) {
         //calculate pc
