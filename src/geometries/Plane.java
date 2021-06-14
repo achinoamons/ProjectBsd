@@ -21,6 +21,7 @@ public class Plane extends Geometry {
      */
     final Point3D _q0;
     final Vector _normal;
+    private static final double DELTA = 0.1;
 
     /**
      * Seconed constractor, gets vector and point
@@ -179,6 +180,35 @@ public class Plane extends Geometry {
 //        return List.of(P);
 //    }
 
-
+//
+@Override
+protected void CreateBoundingBox() {
+    double x = _normal.getHead().getX(), y = _normal.getHead().getY(), z = _normal.getHead().getZ();
+    if (y == 0 && z == 0) {
+        minX = maxX = _q0.getX();
+        minX -= DELTA;
+        maxX += DELTA;
+    } else {
+        minX = Double.NEGATIVE_INFINITY;
+        maxX = Double.POSITIVE_INFINITY;
+    }
+    if (x == 0 && z == 0) {
+        minY = maxY = _q0.getY();
+        minY -= DELTA;
+        maxY += DELTA;
+    } else {
+        minY = Double.NEGATIVE_INFINITY;
+        maxY = Double.POSITIVE_INFINITY;
+    }
+    if (x == 0 && y == 0) {
+        minZ = maxZ = _q0.getZ();
+        minZ -= DELTA;
+        maxZ += DELTA;
+    } else {
+        minZ = Double.NEGATIVE_INFINITY;
+        maxZ = Double.POSITIVE_INFINITY;
+    }
+}
+//
 }
 

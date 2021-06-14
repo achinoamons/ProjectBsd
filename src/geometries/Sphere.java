@@ -165,5 +165,19 @@ public class Sphere extends Geometry {
 //
 //    }
 
+    //
+    @Override
+    protected void CreateBoundingBox() {
+        minX = _center.getX() - radius;
+        maxX = _center.getX() + radius;
+        minY = _center.getY() - radius;
+        maxY = _center.getY() + radius;
+        minZ = _center.getZ() - radius;
+        maxZ = _center.getZ() + radius;
+        middleBoxPoint = _center;
+        finityShape = true;
+    }
+    //
+
 }
 
