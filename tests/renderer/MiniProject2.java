@@ -27,7 +27,7 @@ public class MiniProject2 {
         Scene scene = new Scene("test");
         //Camera camera=(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
         Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0));
-        camera.setDistance(1000);
+        camera.setDistance(1000).setSizeGrid(81).setAntialiacing(true);
         camera.setViewPlaneSize(200,250);
         scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0));
         scene.setBackground(Color.BLACK);
@@ -140,11 +140,13 @@ public class MiniProject2 {
         scene.lights.add(direction_light);
         scene.lights.add(spot_light.setkC(1).setkL(4E-4).setkQ(2E-5));
 
-
+        scene.geometries.createBox();
+        scene.geometries.createGeometriesTree();
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene));
+                .setRayTracer(new BasicRayTracer(scene))
+                .setMultithreading(3).setDebugPrint();
 
 
         render.renderImage();

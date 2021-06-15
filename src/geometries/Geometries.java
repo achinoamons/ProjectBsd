@@ -211,6 +211,7 @@ public class Geometries extends Intersectable {
                 if (minD == 0)
                     break;
                 double temp = first.middleBoxPoint.distance(finiteShapes.get(i).middleBoxPoint);
+               //swap
                 if (temp < minD) {
                     minD = temp;
                     nextTo = finiteShapes.get(i);

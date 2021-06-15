@@ -35,7 +35,7 @@ public class Camera {
     private double _width;
     private double _height;
     private double _distance;
-    private int sizeGrid =1;
+    private int sizeGrid = 1;
 
 
     public int getSizeGrid() {
@@ -46,9 +46,10 @@ public class Camera {
         this.sizeGrid = sizeGrid;
         return this;
     }
+
     //
-        private boolean isAntialiacing=false;
-    private boolean isDepthOfField=false;
+    private boolean isAntialiacing = false;
+    private boolean isDepthOfField = false;
 
     public boolean isDepthOfField() {
         return isDepthOfField;
@@ -209,12 +210,7 @@ public class Camera {
 
     //random with grid
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
-        Ray centerRay = constructRayThroughPixel(nX,nY,j,i);
-//        double t = _distance / (_vTO.dotProduct(centerRay.getDir()));
-//        List<Ray> rays = centerRay.raySplitter(sizeGrid,_width/nX,t);
-//        return rays;
-
-
+        Ray centerRay = constructRayThroughPixel(nX, nY, j, i);
 
         double Rx = _width / nX;//the length of pixel in X axis
         double Ry = _height / nY;//the length of pixel in Y axis
@@ -226,8 +222,8 @@ public class Camera {
 
 
         double n = Math.floor(Math.sqrt(sizeGrid));
-        int delta = (int) (n / 2d);//התזוזות ממרכז הפיקסל
-        //אורך ורוחב של כל "תת" פיקסל
+        int delta = (int) (n / 2d);//the movement from the center of the pixel
+        //length and width of each sub pixel
         double gapX = Rx / n;
         double gapY = Ry / n;
 
@@ -242,19 +238,20 @@ public class Camera {
 *************************************************************************** */
         for (int row = -delta; row <= delta; row++) {
             for (int col = -delta; col <= delta; col++) {
-                tmp = new Point3D(Pij.getX(),Pij.getY(),Pij.getZ());//מרכז הפיקסל הספציפי
-                if (!isZero(row)) {//אם אני לא בפיקסל המרכזי
-                    tmp = tmp.add(_vRIGHT.scale(row * (double) Math.random()*((gapX))-(gapX)/2));//(double) Math.random()*((gapX))-gapX/2))
+                tmp = new Point3D(Pij.getX(), Pij.getY(), Pij.getZ());//
+                if (!isZero(row)) {
+                    tmp = tmp.add(_vRIGHT.scale(row * (double) Math.random() * ((gapX)) - (gapX) / 2));//(double) Math.random()*((gapX))-gapX/2))
                     //tmp = tmp.add(_vRIGHT.scale(row * gapX));
                 }
                 if (!isZero(col)) {
-                    tmp = tmp.add(_vRIGHT.scale(col * (double) Math.random()*((gapY))-(gapY)/2));//(double) Math.random()*((gapY))-gapY/2));
+                    tmp = tmp.add(_vRIGHT.scale(col * (double) Math.random() * ((gapY)) - (gapY) / 2));//(double) Math.random()*((gapY))-gapY/2));
                     //tmp = tmp.add(_vRIGHT.scale(col * gapY));
                 }
                 rays.add(new Ray(_p0, tmp.subtract(_p0).normalize()));
             }
         }
         return rays;
+
     }
 
     private Point3D getPij(int nX, int nY, int j, int i, double width, double height, double distance) {
@@ -271,7 +268,7 @@ public class Camera {
 
         //if both are zero
         if (isZero(Xj) && isZero(Yi)) {
-           return Pij;
+            return Pij;
         }
         //only 1 is zero
         if (isZero(Xj)) {
@@ -342,13 +339,13 @@ public class Camera {
 
     }
     ///for depth
+
     /**
      * construct beam of Ray Through Pixel form location of camera F
      *
      * @param ray for center ray
      * @return List<Ray> form radius For Depth Of Field towards the center of
-     *         pixel<br>
-     *
+     * pixel<br>
      */
     public List<Ray> constructBeamRayThroughFocalPoint(Ray ray, int nX, int nY) {
         if (numOfRayFormApertureWindowToFocalPoint == 0)

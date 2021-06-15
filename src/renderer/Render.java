@@ -237,6 +237,15 @@ public class Render {
         Color color = tracer.traceRay(ray);
         imageWriter.writePixel(col, row, color);
     }
+    public Color AddColor(List<Ray> rays){
+        Color pixelcolor = Color.BLACK;
+
+        for (var r : rays) {
+            Color rcolor = tracer.traceRay(r);
+            pixelcolor = pixelcolor.add(rcolor);
+        }
+        return pixelcolor;
+    }
 
     /**
      * This function renders image's pixel color map from the scene included with
@@ -263,22 +272,16 @@ public class Render {
                     //depthOfField
                     else if (camera.isDepthOfField()&&!camera.isAntialiacing()) {
                         List<Ray> rays = camera.constructBeamRay(nX, nY, pixel.col, pixel.row);
-                        Color pixelcolor = Color.BLACK;
-                        for (var r : rays) {
-                            Color rcolor = tracer.traceRay(r);
-                            pixelcolor = pixelcolor.add(rcolor);
-                        }
+
+                        Color pixelcolor=AddColor(rays);
                         pixelcolor = pixelcolor.scale(1d / rays.size());
                         imageWriter.writePixel(pixel.col, pixel.row, pixelcolor);
                     }
                     //AntiAliacing
                     else if (camera.isAntialiacing()&&!camera.isDepthOfField()) {//anti true
-                        Color pixelcolor = Color.BLACK;
+
                         List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, pixel.col, pixel.row);
-                        for (var r : rays) {
-                            Color rcolor = tracer.traceRay(r);
-                            pixelcolor = pixelcolor.add(rcolor);
-                        }
+                        Color pixelcolor=AddColor(rays);
                         pixelcolor = pixelcolor.scale(1d / rays.size());
                         imageWriter.writePixel(pixel.col, pixel.row, pixelcolor);
                     }
@@ -332,22 +335,15 @@ public class Render {
                     //depthOfField only
                     else if (camera.isDepthOfField()&&!camera.isAntialiacing()) {
                         List<Ray> rays = camera.constructBeamRay(nX, nY, j, i);
-                        Color pixelcolor = Color.BLACK;
-                        for (var r : rays) {
-                            Color rcolor = tracer.traceRay(r);
-                            pixelcolor = pixelcolor.add(rcolor);
-                        }
+                        Color pixelcolor=AddColor(rays);
                         pixelcolor = pixelcolor.scale(1d / rays.size());
                         imageWriter.writePixel(j, i, pixelcolor);
                     }
                     //AntiAliacing only
                     else if (camera.isAntialiacing()&&!camera.isDepthOfField()) {//anti true
-                        Color pixelcolor = Color.BLACK;
+
                         List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i);
-                        for (var r : rays) {
-                            Color rcolor = tracer.traceRay(r);
-                            pixelcolor = pixelcolor.add(rcolor);
-                        }
+                        Color pixelcolor=AddColor(rays);
                         pixelcolor = pixelcolor.scale(1d / rays.size());
                         imageWriter.writePixel(j, i, pixelcolor);
                     }

@@ -17,7 +17,7 @@ public abstract class Intersectable {
    //
     /**
      * minX, maxX, minY, maxY, minZ, maxZ<br>
-     * To create a box that corresponds to the axes we need 6 variables,<br>
+     * To create a box that parallel to the axes we need 6 variables,<br>
      * because there are 8 points of the box double 3 coordinates and each
      * coordinate appears 4 times the same<br>
      * so it is possible to divide 3 * 8/4 = 6
